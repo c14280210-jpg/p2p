@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>P2P Arbitrage</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0f0f1a;
+            --card: #1a1a2e;
+            --text: #ffffff;
+            --text2: #8888aa;
+            --primary: #6c5ce7;
+            --success: #00b894;
+            --danger: #ff6b6b;
+            --radius: 16px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 16px;
+            min-height: 100vh;
+        }
+
+        /* Шапка */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0 20px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status {
+            font-size: 12px;
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--success);
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+
+        /* Вкладки */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--card);
+            padding: 6px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--text2);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab:active {
+            transform: scale(0.95);
+        }
+
+        /* Картки */
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .card-label {
+            font-size: 13px;
+            color: var(--text2);
+        }
+
+        .card-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 4px 0;
+        }
+
+        .card-sub {
+            font-size: 12px;
+            color: var(--text2);
+        }
+
+        /* Сітка */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .price-buy .card-value {
+            color: var(--success);
+        }
+        .price-sell .card-value {
+            color: var(--danger);
+        }
+
+        /* Спред */
+        .spread-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .spread-percent {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Список */
+        .offer-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .offer-item:last-child {
+            border-bottom: none;
+        }
+
+        .offer-price {
+            font-weight: 600;
+        }
+
+        .offer-rating {
+            color: var(--text2);
+            font-size: 13px;
+        }
+
+        .offer-amount {
+            font-size: 12px;
+            color: var(--text2);
+        }
+
+        /* Арбітраж */
+        .arbitrage-result {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .arbitrage-profit {
+            background: linear-gradient(135deg, var(--success), #00d2d3);
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 12px;
+        }
+
+        .arbitrage-profit .profit-value {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        /* Кнопки */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 8px;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        /* Завантаження */
+        .loading {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text2);
+        }
+
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Модалка */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card);
+            border-radius: var(--radius);
+            max-width: 400px;
+            width: 100%;
+            padding: 24px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text2);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: var(--text2);
+            margin-bottom: 4px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .modal-footer .btn {
+            flex: 1;
+        }
+
+        .badge {
+            background: var(--primary);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text2);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <!-- Шапка -->
+    <div class="header">
+        <h1>🚀 P2P Arbitrage</h1>
+        <span class="status" id="statusBadge">🟢 Live</span>
+    </div>
+
+    <!-- Вкладки -->
+    <div class="tabs">
+        <button class="tab active" data-tab="market" onclick="switchTab('market')">📊 Ринок</button>
+        <button class="tab" data-tab="arbitrage" onclick="switchTab('arbitrage')">💰 Арбітраж</button>
+        <button class="tab" data-tab="strategies" onclick="switchTab('strategies')">🎯 Стратегії</button>
+    </div>
+
+    <!-- ========== ВКЛАДКА РИНОК ========== -->
+    <div id="tab-market">
+        <div class="grid-2">
+            <div class="card price-buy">
+                <div class="card-label">📈 Найкраща покупка</div>
+                <div class="card-value" id="bestBuy">---</div>
+                <div class="card-sub">UAH за USDT</div>
+            </div>
+            <div class="card price-sell">
+                <div class="card-label">📉 Найкращий продаж</div>
+                <div class="card-value" id="bestSell">---</div>
+                <div class="card-sub">UAH за USDT</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="spread-box">
+                <div>
+                    <div class="card-label">📊 Спред</div>
+                    <div class="card-value" id="spread">---</div>
+                </div>
+                <div class="spread-percent" id="spreadPercent">---</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <span class="card-label">🏆 Топ покупки</span>
+                <span class="badge" id="buyCount">0</span>
+            </div>
+            <div id="topBuys"><div class="loading">Завантаження...</div></div>
+        </div>
+
+        <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <span class="card-label">🏆 Топ продажу</span>
+                <span class="badge" id="sellCount">0</span>
+            </div>
+            <div id="topSells"><div class="loading">Завантаження...</div></div>
+        </div>
+
+        <button class="btn btn-primary" onclick="refreshMarket()">🔄 Оновити</button>
+    </div>
+
+    <!-- ========== ВКЛАДКА АРБІТРАЖ ========== -->
+    <div id="tab-arbitrage" class="hidden">
+        <div class="card">
+            <div class="card-label" style="margin-bottom:12px;">💰 Пошук арбітражу</div>
+            <div id="arbitrageResult">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Натисніть "Шукати"</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-label">Мін. спред</div>
+                <input type="range" id="minSpread" min="0.1" max="2" step="0.1" value="0.5" style="width:100%;accent-color:var(--primary);">
+                <div style="text-align:center;font-weight:600;margin-top:4px;" id="minSpreadValue">0.5%</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Мін. рейтинг</div>
+                <input type="range" id="minRating" min="80" max="100" step="1" value="95" style="width:100%;accent-color:var(--primary);">
+                <div style="text-align:center;font-weight:600;margin-top:4px;" id="minRatingValue">95%</div>
+            </div>
+        </div>
+
+        <button class="btn btn-success" onclick="checkArbitrage()">🔍 Шукати арбітраж</button>
+        <button class="btn btn-primary" id="autoBtn" onclick="toggleAuto()">⏰ Авто-пошук (30с)</button>
+    </div>
+
+    <!-- ========== ВКЛАДКА СТРАТЕГІЇ ========== -->
+    <div id="tab-strategies" class="hidden">
+        <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <span class="card-label">📋 Мої стратегії</span>
+                <button class="btn" style="width:auto;padding:6px 14px;font-size:12px;margin:0;" onclick="showModal()">+ Додати</button>
+            </div>
+            <div id="strategiesList">
+                <div class="empty">
+                    <div class="empty-icon">📭</div>
+                    <p>Немає стратегій</p>
+                    <button class="btn btn-primary" style="margin-top:12px;width:auto;padding:10px 24px;" onclick="showModal()">Створити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== МОДАЛЬНЕ ВІКНО ========== -->
+<div id="strategyModal" class="modal hidden">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>📝 Створити стратегію</h3>
+            <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Назва</label>
+                <input type="text" id="strategyName" placeholder="Моя стратегія" value="Арбітраж USDT/UAH">
+            </div>
+            <div class="form-group">
+                <label>Криптовалюта</label>
+                <select id="strategyCrypto">
+                    <option value="USDT">USDT</option>
+                    <option value="BTC">BTC</option>
+                    <option value="TON">TON</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Фіат</label>
+                <select id="strategyFiat">
+                    <option value="UAH">UAH</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Мін. спред (%)</label>
+                <input type="number" id="strategySpread" value="0.5" step="0.1">
+            </div>
+            <div class="form-group">
+                <label>Мін. рейтинг (%)</label>
+                <input type="number" id="strategyRating" value="95" step="1">
+            </div>
+            <div class="form-group">
+                <label>Сума (USDT)</label>
+                <input type="number" id="strategyAmount" value="100" step="10">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" onclick="saveStrategy()">💾 Зберегти</button>
+            <button class="btn" style="background:var(--card);color:var(--text2);" onclick="closeModal()">Скасувати</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// ІНІЦІАЛІЗАЦІЯ TELEGRAM WEB APP
+// ============================================================
+const tg = window.Telegram.WebApp;
+tg.expand();
+tg.ready();
+
+// ============================================================
+// ДАНІ (зберігаються в localStorage)
+// ============================================================
+const STORAGE_KEY = 'p2p_strategies';
+
+function loadStrategies() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch {
+        return [];
+    }
+}
+
+function saveStrategies(strategies) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(strategies));
+}
+
+// ============================================================
+// API (Mock дані, бо бекенду немає)
+// ============================================================
+// ТУТ ВИ МОЖЕТЕ ПІДКЛЮЧИТИ РЕАЛЬНИЙ API
+// А поки що - тестові дані
+
+function generateMockOffers(count, basePrice, spread) {
+    const offers = [];
+    for (let i = 0; i < count; i++) {
+        const price = basePrice + (Math.random() - 0.5) * spread;
+        offers.push({
+            price: Math.round(price * 100) / 100,
+            availableAmount: Math.round((100 + Math.random() * 900) * 10) / 10,
+            seller: {
+                rating: Math.round(90 + Math.random() * 10)
+            }
+        });
+    }
+    return offers.sort((a, b) => b.price - a.price);
+}
+
+async function getMarketData() {
+    // Імітація запиту до API
+    await new Promise(r => setTimeout(r, 500));
+    
+    const baseBuy = 42.50 + Math.random() * 0.5;
+    const baseSell = 43.00 + Math.random() * 0.5;
+    
+    return {
+        best_buy_price: Math.round(baseBuy * 100) / 100,
+        best_sell_price: Math.round(baseSell * 100) / 100,
+        spread: Math.round((baseSell - baseBuy) * 100) / 100,
+        spread_percent: Math.round(((baseSell - baseBuy) / baseBuy) * 100 * 100) / 100,
+        buy_offers_count: 15 + Math.floor(Math.random() * 20),
+        sell_offers_count: 12 + Math.floor(Math.random() * 15),
+        top_buys: generateMockOffers(5, baseBuy, 0.3),
+        top_sells: generateMockOffers(5, baseSell, 0.3)
+    };
+}
+
+async function findArbitrage(minSpread, minRating) {
+    await new Promise(r => setTimeout(r, 700));
+    
+    const buyPrice = 42.30 + Math.random() * 0.8;
+    const sellPrice = buyPrice + 0.3 + Math.random() * 1.2;
+    const spread = sellPrice - buyPrice;
+    const spreadPercent = (spread / buyPrice) * 100;
+    
+    if (spreadPercent < minSpread) {
+        return null;
+    }
+    
+    return {
+        buy_offer: {
+            price: Math.round(buyPrice * 100) / 100,
+            availableAmount: Math.round((100 + Math.random() * 400) * 10) / 10,
+            seller: { rating: Math.round(95 + Math.random() * 5) }
+        },
+        sell_offer: {
+            price: Math.round(sellPrice * 100) / 100,
+            availableAmount: Math.round((100 + Math.random() * 400) * 10) / 10,
+            seller: { rating: Math.round(95 + Math.random() * 5) }
+        },
+        spread: Math.round(spread * 100) / 100,
+        spread_percent: Math.round(spreadPercent * 100) / 100,
+        estimated_profit: Math.round(spread * 100 * 100) / 100
+    };
+}
+
+// ============================================================
+// ВКЛАДКА: РИНОК
+// ============================================================
+async function refreshMarket() {
+    const els = {
+        bestBuy: document.getElementById('bestBuy'),
+        bestSell: document.getElementById('bestSell'),
+        spread: document.getElementById('spread'),
+        spreadPercent: document.getElementById('spreadPercent'),
+        buyCount: document.getElementById('buyCount'),
+        sellCount: document.getElementById('sellCount'),
+        topBuys: document.getElementById('topBuys'),
+        topSells: document.getElementById('topSells')
+    };
+    
+    els.bestBuy.textContent = '⏳';
+    els.bestSell.textContent = '⏳';
+    els.spread.textContent = '⏳';
+    
+    try {
+        const data = await getMarketData();
+        
+        els.bestBuy.textContent = `${data.best_buy_price} UAH`;
+        els.bestSell.textContent = `${data.best_sell_price} UAH`;
+        els.spread.textContent = `${data.spread} UAH`;
+        els.spreadPercent.textContent = `${data.spread_percent}%`;
+        els.buyCount.textContent = data.buy_offers_count;
+        els.sellCount.textContent = data.sell_offers_count;
+        
+        els.topBuys.innerHTML = data.top_buys.map(o => `
+            <div class="offer-item">
+                <div>
+                    <span class="offer-price">${o.price} UAH</span>
+                    <span class="offer-amount"> • ${o.availableAmount} USDT</span>
+                </div>
+                <span class="offer-rating">⭐ ${o.seller.rating}%</span>
+            </div>
+        `).join('');
+        
+        els.topSells.innerHTML = data.top_sells.map(o => `
+            <div class="offer-item">
+                <div>
+                    <span class="offer-price">${o.price} UAH</span>
+                    <span class="offer-amount"> • ${o.availableAmount} USDT</span>
+                </div>
+                <span class="offer-rating">⭐ ${o.seller.rating}%</span>
+            </div>
+        `).join('');
+        
+        tg.HapticFeedback.notificationOccurred('success');
+    } catch (e) {
+        console.error(e);
+        tg.HapticFeedback.notificationOccurred('error');
+    }
+}
+
+// ============================================================
+// ВКЛАДКА: АРБІТРАЖ
+// ============================================================
+let autoInterval = null;
+let isAuto = false;
+
+document.getElementById('minSpread').addEventListener('input', function() {
+    document.getElementById('minSpreadValue').textContent = this.value + '%';
+});
+
+document.getElementById('minRating').addEventListener('input', function() {
+    document.getElementById('minRatingValue').textContent = this.value + '%';
+});
+
+async function checkArbitrage() {
+    const resultDiv = document.getElementById('arbitrageResult');
+    const minSpread = parseFloat(document.getElementById('minSpread').value);
+    const minRating = parseFloat(document.getElementById('minRating').value);
+    
+    resultDiv.innerHTML = `<div class="loading"><div class="spinner"></div><p>Шукаю...</p></div>`;
+    
+    try {
+        const data = await findArbitrage(minSpread, minRating);
+        
+        if (data) {
+            resultDiv.innerHTML = `
+                <div style="margin-bottom:8px;">
+                    <div style="color:var(--success);font-weight:600;">📈 КУПІВЛЯ</div>
+                    <div style="font-size:20px;font-weight:700;">${data.buy_offer.price} UAH</div>
+                    <div style="font-size:12px;color:var(--text2);">⭐ ${data.buy_offer.seller.rating}% • 📦 ${data.buy_offer.availableAmount} USDT</div>
+                </div>
+                <div style="margin-bottom:12px;">
+                    <div style="color:var(--danger);font-weight:600;">📉 ПРОДАЖ</div>
+                    <div style="font-size:20px;font-weight:700;">${data.sell_offer.price} UAH</div>
+                    <div style="font-size:12px;color:var(--text2);">⭐ ${data.sell_offer.seller.rating}% • 📦 ${data.sell_offer.availableAmount} USDT</div>
+                </div>
+                <div class="arbitrage-profit">
+                    <div style="font-size:12px;opacity:0.8;">💎 ПОТЕНЦІЙНИЙ ПРИБУТОК</div>
+                    <div class="profit-value">${data.estimated_profit} UAH</div>
+                    <div style="font-size:14px;opacity:0.8;">Спред: ${data.spread_percent}%</div>
+                </div>
+            `;
+            tg.HapticFeedback.notificationOccurred('success');
+        } else {
+            resultDiv.innerHTML = `
+                <div class="empty">
+                    <div class="empty-icon">😕</div>
+                    <p>Можливостей не знайдено</p>
+                    <p style="font-size:12px;color:var(--text2);">Спробуйте змінити параметри</p>
+                </div>
+            `;
+            tg.HapticFeedback.notificationOccurred('warning');
+        }
+    } catch (e) {
+        resultDiv.innerHTML = `<div class="empty"><div class="empty-icon">❌</div><p>Помилка</p></div>`;
+        tg.HapticFeedback.notificationOccurred('error');
+    }
+}
+
+function toggleAuto() {
+    const btn = document.getElementById('autoBtn');
+    isAuto = !isAuto;
+    
+    if (isAuto) {
+        btn.textContent = '⏹ Зупинити';
+        btn.style.border = '1px solid var(--danger)';
+        checkArbitrage();
+        autoInterval = setInterval(checkArbitrage, 30000);
+    } else {
+        btn.textContent = '⏰ Авто-пошук (30с)';
+        btn.style.border = 'none';
+        clearInterval(autoInterval);
+    }
+}
+
+// ============================================================
+// ВКЛАДКА: СТРАТЕГІЇ
+// ============================================================
+function renderStrategies() {
+    const list = document.getElementById('strategiesList');
+    const strategies = loadStrategies();
+    
+    if (strategies.length === 0) {
+        list.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">📭</div>
+                <p>Немає стратегій</p>
+                <button class="btn btn-primary" style="margin-top:12px;width:auto;padding:10px 24px;" onclick="showModal()">Створити</button>
+            </div>
+        `;
+        return;
+    }
+    
+    list.innerHTML = strategies.map((s, i) => `
+        <div class="card" style="margin-bottom:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    <div style="font-weight:600;">${s.name}</div>
+                    <div style="font-size:12px;color:var(--text2);">
+                        ${s.crypto}/${s.fiat} • Спред: ${s.min_spread}% • Рейтинг: ${s.min_rating}%
+                    </div>
+                </div>
+                <span class="badge" style="background:${s.active ? 'var(--success)' : 'var(--danger)'};">
+                    ${s.active ? '🟢 Активна' : '🔴 Викл'}
+                </span>
+            </div>
+            <div style="margin-top:8px;display:flex;gap:8px;">
+                <button class="btn" style="width:auto;padding:6px 14px;font-size:12px;margin:0;background:${s.active ? 'var(--danger)' : 'var(--success)'};" onclick="toggleStrategy(${i})">
+                    ${s.active ? '⏸ Вимкнути' : '▶️ Активувати'}
+                </button>
+                <button class="btn" style="width:auto;padding:6px 14px;font-size:12px;margin:0;background:var(--danger);" onclick="deleteStrategy(${i})">
+                    🗑 Видалити
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showModal() {
+    document.getElementById('strategyModal').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('strategyModal').classList.add('hidden');
+}
+
+function saveStrategy() {
+    const strategy = {
+        name: document.getElementById('strategyName').value || 'Моя стратегія',
+        crypto: document.getElementById('strategyCrypto').value,
+        fiat: document.getElementById('strategyFiat').value,
+        min_spread: parseFloat(document.getElementById('strategySpread').value),
+        min_rating: parseFloat(document.getElementById('strategyRating').value),
+        amount: parseFloat(document.getElementById('strategyAmount').value),
+        active: true
+    };
+    
+    const strategies = loadStrategies();
+    strategies.push(strategy);
+    saveStrategies(strategies);
+    
+    closeModal();
+    renderStrategies();
+    tg.HapticFeedback.notificationOccurred('success');
+}
+
+function toggleStrategy(index) {
+    const strategies = loadStrategies();
+    strategies[index].active = !strategies[index].active;
+    saveStrategies(strategies);
+    renderStrategies();
+}
+
+function deleteStrategy(index) {
+    if (confirm('Видалити стратегію?')) {
+        const strategies = loadStrategies();
+        strategies.splice(index, 1);
+        saveStrategies(strategies);
+        renderStrategies();
+        tg.HapticFeedback.notificationOccurred('success');
+    }
+}
+
+// ============================================================
+// ПЕРЕКЛЮЧЕННЯ ВКЛАДОК
+// ============================================================
+function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+    document.querySelector(`.tab[data-tab="${tab}"]`).classList.add('active');
+    
+    document.querySelectorAll('#tab-market, #tab-arbitrage, #tab-strategies').forEach(el => {
+        el.classList.add('hidden');
+    });
+    document.getElementById(`tab-${tab}`).classList.remove('hidden');
+    
+    if (tab === 'market') refreshMarket();
+    if (tab === 'strategies') renderStrategies();
+    
+    tg.HapticFeedback.selectionChanged();
+}
+
+// ============================================================
+// ЗАПУСК
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+    refreshMarket();
+    renderStrategies();
+    
+    setInterval(() => {
+        if (!document.getElementById('tab-market').classList.contains('hidden')) {
+            refreshMarket();
+        }
+    }, 30000);
+});
+
+// Telegram Haptic
+tg.HapticFeedback.impactOccurred('light');
+</script>
+
+</body>
+</html>
