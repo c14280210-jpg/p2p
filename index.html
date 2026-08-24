@@ -22,23 +22,24 @@
             --red: #ff6b6b;
             --orange: #ff9f43;
             --border: rgba(0, 212, 160, 0.08);
-            --radius: 14px;
+            --radius: 16px;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
-            padding: 10px;
+            padding: 16px;
+            font-size: 18px;
             min-height: 100vh;
         }
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 4px 0 12px;
+            padding: 8px 0 20px;
         }
         .header h1 {
-            font-size: 20px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--green);
             letter-spacing: -0.5px;
@@ -48,33 +49,33 @@
             font-weight: 400;
         }
         .status {
-            font-size: 10px;
+            font-size: 14px;
             background: rgba(0, 212, 160, 0.12);
             color: var(--green);
-            padding: 3px 12px;
-            border-radius: 20px;
+            padding: 6px 16px;
+            border-radius: 24px;
             border: 1px solid rgba(0, 212, 160, 0.15);
         }
         .update-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 4px 0 10px;
-            font-size: 10px;
+            padding: 8px 0 14px;
+            font-size: 14px;
             color: var(--text2);
             border-bottom: 1px solid var(--border);
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
         .update-bar .live {
             color: var(--green);
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
         .update-bar .live::before {
             content: '';
-            width: 5px;
-            height: 5px;
+            width: 8px;
+            height: 8px;
             background: var(--green);
             border-radius: 50%;
             display: inline-block;
@@ -89,25 +90,30 @@
                 opacity: 0.2;
             }
         }
+        .update-bar .counts {
+            display: flex;
+            gap: 14px;
+            font-size: 13px;
+        }
         .tabs {
             display: flex;
-            gap: 3px;
+            gap: 6px;
             background: var(--card);
-            padding: 4px;
-            border-radius: 12px;
-            margin-bottom: 12px;
+            padding: 6px;
+            border-radius: 14px;
+            margin-bottom: 16px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
         .tab {
             flex: 1;
-            min-width: 44px;
-            padding: 6px 6px;
+            min-width: 64px;
+            padding: 10px 12px;
             border: none;
-            border-radius: 9px;
+            border-radius: 10px;
             background: transparent;
             color: var(--text2);
-            font-size: 9px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
@@ -128,38 +134,37 @@
         .tab-content.active {
             display: block;
         }
-
         .card {
             background: var(--card);
             border-radius: var(--radius);
-            padding: 10px 12px;
-            margin-bottom: 8px;
+            padding: 16px 18px;
+            margin-bottom: 12px;
             border: 1px solid var(--border);
         }
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
         }
         .card-label {
-            font-size: 9px;
+            font-size: 12px;
             color: var(--text2);
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
         }
         .card-value {
-            font-size: 20px;
+            font-size: 28px;
             font-weight: 700;
         }
         .card-value.small {
-            font-size: 14px;
+            font-size: 18px;
         }
         .card-sub {
-            font-size: 10px;
+            font-size: 13px;
             color: var(--text2);
-            margin-top: 1px;
+            margin-top: 4px;
         }
         .green {
             color: var(--green);
@@ -170,28 +175,26 @@
         .orange {
             color: var(--orange);
         }
-
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 6px;
+            gap: 10px;
         }
         .grid-3 {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 6px;
+            gap: 10px;
         }
         .grid-4 {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 4px;
+            gap: 8px;
         }
-
         .platform-badge {
             display: inline-block;
-            padding: 1px 7px;
-            border-radius: 8px;
-            font-size: 8px;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
         }
@@ -207,12 +210,11 @@
             background: #0088cc20;
             color: #0088cc;
         }
-
         .offer-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 5px 0;
+            padding: 10px 0;
             border-bottom: 1px solid var(--border);
         }
         .offer-item:last-child {
@@ -221,41 +223,40 @@
         .offer-left {
             display: flex;
             flex-direction: column;
-            gap: 1px;
+            gap: 3px;
         }
         .offer-price {
-            font-size: 13px;
+            font-size: 17px;
             font-weight: 600;
         }
         .offer-meta {
-            font-size: 9px;
+            font-size: 12px;
             color: var(--text2);
             display: flex;
-            gap: 4px;
+            gap: 8px;
             flex-wrap: wrap;
         }
         .offer-rating {
-            font-size: 10px;
+            font-size: 14px;
             color: var(--green);
             font-weight: 500;
         }
         .offer-rating.red {
             color: var(--red);
         }
-
         .arbitrage-card {
             background: var(--card2);
             border-radius: var(--radius);
-            padding: 10px 12px;
-            margin-bottom: 6px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
             border: 1px solid var(--border);
-            border-left: 3px solid var(--green);
+            border-left: 4px solid var(--green);
         }
         .arbitrage-card .route {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3px;
+            margin-bottom: 6px;
         }
         .arbitrage-card .prices {
             display: flex;
@@ -264,52 +265,51 @@
         }
         .arbitrage-card .prices .buy-price {
             color: var(--green);
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 700;
         }
         .arbitrage-card .prices .sell-price {
             color: var(--red);
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 700;
         }
         .arbitrage-profit {
             background: linear-gradient(135deg, rgba(0, 212, 160, 0.1), rgba(0, 212, 160, 0.02));
-            border-radius: 10px;
-            padding: 8px 10px;
+            border-radius: 12px;
+            padding: 12px 14px;
             text-align: center;
-            margin-top: 6px;
+            margin-top: 8px;
             border: 1px solid rgba(0, 212, 160, 0.08);
         }
         .arbitrage-profit .profit-value {
-            font-size: 22px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--green);
         }
         .arbitrage-profit .profit-label {
-            font-size: 9px;
+            font-size: 11px;
             color: var(--text2);
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
         }
         .arbitrage-profit .profit-details {
-            font-size: 10px;
+            font-size: 12px;
             color: var(--text2);
-            margin-top: 2px;
+            margin-top: 4px;
         }
-
         .crypto-selector {
             display: flex;
-            gap: 3px;
+            gap: 6px;
             flex-wrap: wrap;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
         }
         .crypto-selector .crypto-btn {
-            padding: 3px 10px;
+            padding: 6px 14px;
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 18px;
             background: transparent;
             color: var(--text2);
-            font-size: 10px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
@@ -322,17 +322,16 @@
         .crypto-selector .crypto-btn:active {
             transform: scale(0.94);
         }
-
         .btn {
             width: 100%;
-            padding: 8px;
+            padding: 12px 16px;
             border: none;
-            border-radius: 10px;
-            font-size: 11px;
+            border-radius: 12px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            margin-top: 4px;
+            margin-top: 6px;
         }
         .btn:active {
             transform: scale(0.96);
@@ -356,24 +355,23 @@
         }
         .btn-sm {
             width: auto;
-            padding: 3px 10px;
-            font-size: 9px;
+            padding: 6px 14px;
+            font-size: 12px;
             margin: 0;
         }
-
         .loading {
             text-align: center;
-            padding: 16px 0;
+            padding: 24px 0;
             color: var(--text2);
         }
         .spinner {
             border: 3px solid rgba(0, 212, 160, 0.08);
             border-top: 3px solid var(--green);
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             animation: spin 0.8s linear infinite;
-            margin: 0 auto 6px;
+            margin: 0 auto 8px;
         }
         @keyframes spin {
             to {
@@ -385,19 +383,18 @@
         }
         .empty {
             text-align: center;
-            padding: 16px 0;
+            padding: 24px 0;
             color: var(--text2);
         }
         .empty-icon {
-            font-size: 28px;
-            margin-bottom: 4px;
+            font-size: 40px;
+            margin-bottom: 8px;
         }
-
         .badge {
             display: inline-block;
-            padding: 1px 7px;
-            border-radius: 8px;
-            font-size: 8px;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 11px;
             font-weight: 600;
         }
         .badge.active {
@@ -412,7 +409,6 @@
             background: rgba(0, 212, 160, 0.2);
             color: var(--green);
         }
-
         .modal {
             position: fixed;
             top: 0;
@@ -423,15 +419,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 14px;
+            padding: 20px;
             z-index: 1000;
         }
         .modal-content {
             background: var(--card);
             border-radius: var(--radius);
-            max-width: 380px;
+            max-width: 420px;
             width: 100%;
-            padding: 14px 16px;
+            padding: 20px 24px;
             border: 1px solid var(--border);
             max-height: 90vh;
             overflow-y: auto;
@@ -440,36 +436,36 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
         }
         .modal-header h3 {
-            font-size: 14px;
+            font-size: 18px;
         }
         .modal-close {
             background: none;
             border: none;
             color: var(--text2);
-            font-size: 18px;
+            font-size: 24px;
             cursor: pointer;
         }
         .form-group {
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
         .form-group label {
             display: block;
-            font-size: 10px;
+            font-size: 13px;
             color: var(--text2);
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 6px 8px;
+            padding: 10px 12px;
             background: var(--card2);
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 10px;
             color: var(--text);
-            font-size: 12px;
+            font-size: 15px;
         }
         .form-group input:focus,
         .form-group select:focus {
@@ -478,44 +474,97 @@
         }
         .modal-footer {
             display: flex;
-            gap: 6px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-top: 14px;
         }
         .modal-footer .btn {
             flex: 1;
         }
 
-        .calc-grid {
+        /* ===== НОВИЙ КАЛЬКУЛЯТОР ===== */
+        .calc-result-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4px;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 8px;
         }
-        .calc-grid .calc-item {
+        .calc-result-item {
             background: var(--card2);
-            padding: 6px 8px;
-            border-radius: 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
             text-align: center;
         }
-        .calc-grid .calc-item .calc-label {
-            font-size: 8px;
+        .calc-result-item .calc-label {
+            font-size: 9px;
             color: var(--text2);
             text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
-        .calc-grid .calc-item .calc-value {
-            font-size: 16px;
+        .calc-result-item .calc-value {
+            font-size: 18px;
             font-weight: 700;
+            margin-top: 2px;
         }
-        .calc-grid .calc-item .calc-value.green {
+        .calc-result-item .calc-value.green {
             color: var(--green);
         }
-        .calc-grid .calc-item .calc-value.red {
+        .calc-result-item .calc-value.red {
             color: var(--red);
         }
-        .calc-grid .calc-item .calc-value.orange {
+        .calc-result-item .calc-value.orange {
             color: var(--orange);
+        }
+        .calc-result-item .calc-value.white {
+            color: var(--text);
+        }
+
+        .platform-fee-selector {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .platform-fee-selector .fee-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: transparent;
+            color: var(--text2);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .platform-fee-selector .fee-btn.active {
+            background: var(--green);
+            color: var(--bg);
+            border-color: var(--green);
+        }
+        .platform-fee-selector .fee-btn:active {
+            transform: scale(0.94);
         }
 
         @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .status {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+            .tab {
+                font-size: 10px;
+                padding: 6px 8px;
+                min-width: 44px;
+            }
+            .card-value {
+                font-size: 22px;
+            }
+            .card {
+                padding: 12px 14px;
+            }
             .grid-2 {
                 grid-template-columns: 1fr;
             }
@@ -525,26 +574,47 @@
             .grid-4 {
                 grid-template-columns: 1fr 1fr;
             }
-            .tab {
-                font-size: 8px;
-                padding: 4px 5px;
-                min-width: 38px;
+            .calc-result-grid {
+                grid-template-columns: 1fr 1fr;
             }
-            .card-value {
-                font-size: 17px;
-            }
-            .card {
-                padding: 8px 10px;
-            }
-            .header h1 {
-                font-size: 17px;
+            .offer-price {
+                font-size: 15px;
             }
             .arbitrage-card .prices .buy-price,
             .arbitrage-card .prices .sell-price {
-                font-size: 14px;
+                font-size: 17px;
             }
-            .calc-grid .calc-item .calc-value {
-                font-size: 14px;
+            .arbitrage-profit .profit-value {
+                font-size: 24px;
+            }
+            .calc-result-item .calc-value {
+                font-size: 15px;
+            }
+            .modal-content {
+                padding: 16px;
+            }
+        }
+        @media (min-width: 768px) {
+            body {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 32px;
+            }
+            .card-value {
+                font-size: 32px;
+            }
+            .arbitrage-card .prices .buy-price,
+            .arbitrage-card .prices .sell-price {
+                font-size: 24px;
+            }
+            .arbitrage-profit .profit-value {
+                font-size: 32px;
+            }
+            .calc-result-item .calc-value {
+                font-size: 22px;
             }
         }
     </style>
@@ -561,7 +631,7 @@
         <!-- UPDATE BAR -->
         <div class="update-bar">
             <span class="live">Оновлено: <span id="updateTime">--:--:--</span></span>
-            <div class="counts" style="display:flex;gap:8px;font-size:9px;">
+            <div class="counts">
                 <span style="color:#f0b90b;">● <span id="countBinance">0</span></span>
                 <span style="color:#f7a600;">● <span id="countBybit">0</span></span>
                 <span style="color:#0088cc;">● <span id="countWallet">0</span></span>
@@ -578,9 +648,7 @@
             <button class="tab" data-tab="strategies" onclick="switchTab('strategies')">🎯 Стратегії</button>
         </div>
 
-        <!-- ========================================================== -->
-        <!-- BINANCE -->
-        <!-- ========================================================== -->
+        <!-- ===== BINANCE ===== -->
         <div id="tab-binance" class="tab-content active">
             <div class="crypto-selector" id="cryptoSelectorBinance">
                 <button class="crypto-btn active" data-crypto="USDT" onclick="selectCrypto('binance','USDT')">USDT</button>
@@ -624,9 +692,7 @@
             <button class="btn btn-primary" onclick="refreshPlatform('binance')">🔄 Оновити</button>
         </div>
 
-        <!-- ========================================================== -->
-        <!-- BYBIT -->
-        <!-- ========================================================== -->
+        <!-- ===== BYBIT ===== -->
         <div id="tab-bybit" class="tab-content">
             <div class="crypto-selector" id="cryptoSelectorBybit">
                 <button class="crypto-btn active" data-crypto="USDT" onclick="selectCrypto('bybit','USDT')">USDT</button>
@@ -670,9 +736,7 @@
             <button class="btn btn-primary" onclick="refreshPlatform('bybit')">🔄 Оновити</button>
         </div>
 
-        <!-- ========================================================== -->
-        <!-- WALLET -->
-        <!-- ========================================================== -->
+        <!-- ===== WALLET ===== -->
         <div id="tab-wallet" class="tab-content">
             <div class="crypto-selector" id="cryptoSelectorWallet">
                 <button class="crypto-btn active" data-crypto="USDT" onclick="selectCrypto('wallet','USDT')">USDT</button>
@@ -716,9 +780,7 @@
             <button class="btn btn-primary" onclick="refreshPlatform('wallet')">🔄 Оновити</button>
         </div>
 
-        <!-- ========================================================== -->
-        <!-- ARBITRAGE -->
-        <!-- ========================================================== -->
+        <!-- ===== ARBITRAGE ===== -->
         <div id="tab-arbitrage" class="tab-content">
             <div class="card">
                 <div class="card-header">
@@ -733,18 +795,18 @@
             <div class="grid-3">
                 <div class="card">
                     <div class="card-label">Мін. спред</div>
-                    <input type="range" id="minSpread" min="0.1" max="5" step="0.1" value="0.5" style="width:100%;accent-color:var(--green);">
-                    <div style="text-align:center;font-weight:600;color:var(--green);font-size:13px;margin-top:2px;" id="minSpreadValue">0.5%</div>
+                    <input type="range" id="minSpread" min="0.1" max="5" step="0.1" value="0.5" style="width:100%;accent-color:var(--green);height:6px;">
+                    <div style="text-align:center;font-weight:600;color:var(--green);font-size:16px;margin-top:4px;" id="minSpreadValue">0.5%</div>
                 </div>
                 <div class="card">
                     <div class="card-label">Мін. рейтинг</div>
-                    <input type="range" id="minRating" min="80" max="100" step="1" value="95" style="width:100%;accent-color:var(--green);">
-                    <div style="text-align:center;font-weight:600;color:var(--green);font-size:13px;margin-top:2px;" id="minRatingValue">95%</div>
+                    <input type="range" id="minRating" min="80" max="100" step="1" value="95" style="width:100%;accent-color:var(--green);height:6px;">
+                    <div style="text-align:center;font-weight:600;color:var(--green);font-size:16px;margin-top:4px;" id="minRatingValue">95%</div>
                 </div>
                 <div class="card">
                     <div class="card-label">Сума (USDT)</div>
-                    <input type="range" id="tradeAmount" min="10" max="1000" step="10" value="100" style="width:100%;accent-color:var(--green);">
-                    <div style="text-align:center;font-weight:600;color:var(--green);font-size:13px;margin-top:2px;" id="tradeAmountValue">100 USDT</div>
+                    <input type="range" id="tradeAmount" min="10" max="1000" step="10" value="100" style="width:100%;accent-color:var(--green);height:6px;">
+                    <div style="text-align:center;font-weight:600;color:var(--green);font-size:16px;margin-top:4px;" id="tradeAmountValue">100 USDT</div>
                 </div>
             </div>
 
@@ -755,13 +817,22 @@
             </div>
         </div>
 
-        <!-- ========================================================== -->
-        <!-- CALCULATOR -->
-        <!-- ========================================================== -->
+        <!-- ===== НОВИЙ КАЛЬКУЛЯТОР ===== -->
         <div id="tab-calculator" class="tab-content">
             <div class="card">
                 <div class="card-header">
                     <span class="card-label">🧮 Калькулятор арбітражу</span>
+                </div>
+
+                <!-- Вибір платформи для автоматичної комісії -->
+                <div class="form-group" style="margin-bottom:12px;">
+                    <label>🏦 Платформа</label>
+                    <div class="platform-fee-selector" id="platformFeeSelector">
+                        <button class="fee-btn" data-fee="0.1" onclick="selectPlatformFee('binance', 0.1)">Binance 0.1%</button>
+                        <button class="fee-btn" data-fee="0.1" onclick="selectPlatformFee('bybit', 0.1)">Bybit 0.1%</button>
+                        <button class="fee-btn active" data-fee="0.15" onclick="selectPlatformFee('wallet', 0.15)">Wallet TON 0.15%</button>
+                        <button class="fee-btn" data-fee="custom" onclick="selectPlatformFee('custom', null)">⚙️ Своя</button>
+                    </div>
                 </div>
 
                 <div class="grid-2">
@@ -779,63 +850,69 @@
                     </div>
                     <div class="form-group">
                         <label>🏦 Комісія введення (%)</label>
-                        <input type="number" id="calcDepositFee" value="0.5" step="0.1" oninput="calculateProfit()">
+                        <input type="number" id="calcDepositFee" value="0.5" step="0.01" oninput="calculateProfit()">
                     </div>
                     <div class="form-group">
                         <label>🏦 Комісія виведення (%)</label>
-                        <input type="number" id="calcWithdrawFee" value="0.5" step="0.1" oninput="calculateProfit()">
+                        <input type="number" id="calcWithdrawFee" value="0.5" step="0.01" oninput="calculateProfit()">
                     </div>
                     <div class="form-group">
                         <label>🏦 Комісія платформи (%)</label>
-                        <input type="number" id="calcPlatformFee" value="0.1" step="0.1" oninput="calculateProfit()">
+                        <input type="number" id="calcPlatformFee" value="0.15" step="0.01" oninput="calculateProfit()">
                     </div>
+                </div>
+
+                <div style="display:flex; gap:8px; margin-top:4px;">
+                    <button class="btn btn-secondary btn-sm" onclick="resetCalculator()" style="width:auto;padding:8px 20px;">🔄 Скинути</button>
+                    <span style="font-size:11px;color:var(--text2);display:flex;align-items:center;margin-left:auto;">
+                        ⚡ Оновлюється автоматично
+                    </span>
                 </div>
             </div>
 
+            <!-- РЕЗУЛЬТАТ -->
             <div class="card">
                 <div class="card-header">
                     <span class="card-label">📊 Результат розрахунку</span>
                 </div>
-                <div class="calc-grid" id="calcResults">
-                    <div class="calc-item">
+                <div class="calc-result-grid">
+                    <div class="calc-result-item">
                         <div class="calc-label">📈 Спред (UAH)</div>
-                        <div class="calc-value green" id="calcSpread">0.50</div>
+                        <div class="calc-value green" id="calcSpread">0.00</div>
                     </div>
-                    <div class="calc-item">
+                    <div class="calc-result-item">
                         <div class="calc-label">📊 Спред (%)</div>
-                        <div class="calc-value orange" id="calcSpreadPercent">1.11%</div>
+                        <div class="calc-value orange" id="calcSpreadPercent">0.00%</div>
                     </div>
-                    <div class="calc-item">
+                    <div class="calc-result-item">
                         <div class="calc-label">💰 Валовий прибуток</div>
-                        <div class="calc-value green" id="calcGrossProfit">50.00</div>
+                        <div class="calc-value green" id="calcGrossProfit">0.00</div>
                     </div>
-                    <div class="calc-item">
+                    <div class="calc-result-item">
                         <div class="calc-label">💸 Всього комісій</div>
-                        <div class="calc-value red" id="calcTotalFees">1.10</div>
+                        <div class="calc-value red" id="calcTotalFees">0.00</div>
                     </div>
-                    <div class="calc-item">
+                    <div class="calc-result-item">
                         <div class="calc-label">💎 Чистий прибуток</div>
-                        <div class="calc-value green" id="calcNetProfit">48.90</div>
+                        <div class="calc-value green" id="calcNetProfit">0.00</div>
                     </div>
-                    <div class="calc-item">
+                    <div class="calc-result-item">
                         <div class="calc-label">📈 ROI (%)</div>
-                        <div class="calc-value orange" id="calcROI">1.08%</div>
+                        <div class="calc-value orange" id="calcROI">0.00%</div>
                     </div>
-                    <div class="calc-item">
+                    <div class="calc-result-item">
                         <div class="calc-label">📊 Маржа (%)</div>
-                        <div class="calc-value orange" id="calcMargin">1.10%</div>
+                        <div class="calc-value orange" id="calcMargin">0.00%</div>
                     </div>
-                    <div class="calc-item">
+                    <div class="calc-result-item">
                         <div class="calc-label">💵 Чистий прибуток (USDT)</div>
-                        <div class="calc-value green" id="calcNetProfitUSDT">1.08</div>
+                        <div class="calc-value white" id="calcNetProfitUSDT">0.0000</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ========================================================== -->
-        <!-- STRATEGIES -->
-        <!-- ========================================================== -->
+        <!-- ===== STRATEGIES ===== -->
         <div id="tab-strategies" class="tab-content">
             <div class="card">
                 <div class="card-header">
@@ -853,15 +930,13 @@
                     <span class="badge active" id="strategyActivityCount">0 активних</span>
                 </div>
                 <div id="strategyActivity">
-                    <div class="empty"><p style="font-size:10px;color:var(--text2);">Очікує сканування...</p></div>
+                    <div class="empty"><p style="font-size:12px;color:var(--text2);">Очікує сканування...</p></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ========================================================== -->
-    <!-- MODAL STRATEGY -->
-    <!-- ========================================================== -->
+    <!-- ===== MODAL ===== -->
     <div id="strategyModal" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
@@ -935,7 +1010,8 @@
             strategies: JSON.parse(localStorage.getItem('p2p_strategies') || '[]'),
             autoScan: false,
             autoInterval: null,
-            selectedCrypto: { binance: 'USDT', bybit: 'USDT', wallet: 'USDT' }
+            selectedCrypto: { binance: 'USDT', bybit: 'USDT', wallet: 'USDT' },
+            selectedPlatformFee: 'wallet'
         };
 
         // ============================================================
@@ -1087,7 +1163,7 @@
         }
 
         // ============================================================
-        // РЕНДЕРИНГ
+        // РЕНДЕРИНГ ПЛАТФОРМ
         // ============================================================
         function renderPlatform(platform) {
             const data = state[platform];
@@ -1237,15 +1313,15 @@
                     <div class="arbitrage-card" style="border-left-color: ${buy.platformColor};">
                         <div class="route">
                             <span class="platform-badge ${buy.platform}">${buy.platformName}</span>
-                            <span style="color:var(--text2);font-size:12px;">➜</span>
+                            <span style="color:var(--text2);font-size:16px;">➜</span>
                             <span class="platform-badge ${sell.platform}">${sell.platformName}</span>
-                            <span style="font-size:9px;color:var(--text2);">#${idx+1}</span>
+                            <span style="font-size:11px;color:var(--text2);">#${idx+1}</span>
                         </div>
                         <div class="prices">
-                            <div><span class="buy-price">📈 ${buy.price.toFixed(2)}</span> <span style="font-size:9px;color:var(--text2);">⭐${buy.rating.toFixed(0)}%</span></div>
-                            <div><span class="sell-price">📉 ${sell.price.toFixed(2)}</span> <span style="font-size:9px;color:var(--text2);">⭐${sell.rating.toFixed(0)}%</span></div>
+                            <div><span class="buy-price">📈 ${buy.price.toFixed(2)}</span> <span style="font-size:12px;color:var(--text2);">⭐${buy.rating.toFixed(0)}%</span></div>
+                            <div><span class="sell-price">📉 ${sell.price.toFixed(2)}</span> <span style="font-size:12px;color:var(--text2);">⭐${sell.rating.toFixed(0)}%</span></div>
                         </div>
-                        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text2);margin-top:2px;">
+                        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-top:4px;">
                             <span>📦 ${buy.amount.toFixed(1)} → ${sell.amount.toFixed(1)} USDT</span>
                             <span>💳 ${buy.payMethods[0]||'—'} → ${sell.payMethods[0]||'—'}</span>
                         </div>
@@ -1284,15 +1360,40 @@
         }
 
         // ============================================================
-        // КАЛЬКУЛЯТОР
+        // НОВИЙ КАЛЬКУЛЯТОР
         // ============================================================
+        function selectPlatformFee(platform, fee) {
+            state.selectedPlatformFee = platform;
+            const btns = document.querySelectorAll('.platform-fee-selector .fee-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            const target = document.querySelector(`.platform-fee-selector .fee-btn[data-fee="${fee || 'custom'}"]`);
+            if (target) target.classList.add('active');
+
+            if (fee !== null) {
+                document.getElementById('calcPlatformFee').value = fee;
+            }
+            calculateProfit();
+        }
+
         function calculateProfit() {
-            const amount = parseFloat(document.getElementById('calcAmount').value) || 100;
-            const buyPrice = parseFloat(document.getElementById('calcBuyPrice').value) || 45.20;
-            const sellPrice = parseFloat(document.getElementById('calcSellPrice').value) || 45.70;
+            const amount = parseFloat(document.getElementById('calcAmount').value) || 0;
+            const buyPrice = parseFloat(document.getElementById('calcBuyPrice').value) || 0;
+            const sellPrice = parseFloat(document.getElementById('calcSellPrice').value) || 0;
             const depositFee = parseFloat(document.getElementById('calcDepositFee').value) || 0;
             const withdrawFee = parseFloat(document.getElementById('calcWithdrawFee').value) || 0;
             const platformFee = parseFloat(document.getElementById('calcPlatformFee').value) || 0;
+
+            if (amount <= 0 || buyPrice <= 0 || sellPrice <= 0) {
+                document.getElementById('calcSpread').textContent = '0.00';
+                document.getElementById('calcSpreadPercent').textContent = '0.00%';
+                document.getElementById('calcGrossProfit').textContent = '0.00';
+                document.getElementById('calcTotalFees').textContent = '0.00';
+                document.getElementById('calcNetProfit').textContent = '0.00';
+                document.getElementById('calcROI').textContent = '0.00%';
+                document.getElementById('calcMargin').textContent = '0.00%';
+                document.getElementById('calcNetProfitUSDT').textContent = '0.0000';
+                return;
+            }
 
             const spread = sellPrice - buyPrice;
             const spreadPercent = (spread / buyPrice) * 100;
@@ -1317,6 +1418,22 @@
             document.getElementById('calcNetProfitUSDT').textContent = netProfitUSDT.toFixed(4);
         }
 
+        function resetCalculator() {
+            document.getElementById('calcAmount').value = 100;
+            document.getElementById('calcBuyPrice').value = 45.20;
+            document.getElementById('calcSellPrice').value = 45.70;
+            document.getElementById('calcDepositFee').value = 0.5;
+            document.getElementById('calcWithdrawFee').value = 0.5;
+            document.getElementById('calcPlatformFee').value = 0.15;
+            // Скидаємо вибір платформи на Wallet
+            const btns = document.querySelectorAll('.platform-fee-selector .fee-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.platform-fee-selector .fee-btn[data-fee="0.15"]').classList.add('active');
+            state.selectedPlatformFee = 'wallet';
+            calculateProfit();
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
         // ============================================================
         // СТРАТЕГІЇ
         // ============================================================
@@ -1325,7 +1442,7 @@
             document.getElementById('strategyActivityCount').textContent = `${strategies.length} активних`;
             if (strategies.length === 0) {
                 document.getElementById('strategyActivity').innerHTML =
-                    '<div class="empty"><p style="font-size:10px;color:var(--text2);">Немає активних стратегій</p></div>';
+                    '<div class="empty"><p style="font-size:12px;color:var(--text2);">Немає активних стратегій</p></div>';
                 return;
             }
             let html = '';
@@ -1340,11 +1457,11 @@
                 html += `
                     <div class="offer-item">
                         <div>
-                            <span style="font-weight:500;font-size:12px;">${s.name}</span>
-                            <span style="font-size:9px;color:var(--text2);"> • ${s.crypto}/${s.fiat}</span>
-                            ${match ? `<span style="font-size:9px;color:var(--green);"> (${match.netProfit.toFixed(2)} UAH)</span>` : ''}
+                            <span style="font-weight:500;font-size:14px;">${s.name}</span>
+                            <span style="font-size:11px;color:var(--text2);"> • ${s.crypto}/${s.fiat}</span>
+                            ${match ? `<span style="font-size:11px;color:var(--green);"> (${match.netProfit.toFixed(2)} UAH)</span>` : ''}
                         </div>
-                        <span style="color:${color};font-size:10px;font-weight:500;">${status}</span>
+                        <span style="color:${color};font-size:12px;font-weight:500;">${status}</span>
                     </div>
                 `;
             }
@@ -1360,20 +1477,20 @@
                 return;
             }
             container.innerHTML = strategies.map((s, i) => `
-                <div class="card" style="margin-bottom:4px;padding:8px 10px;">
+                <div class="card" style="margin-bottom:8px;padding:12px 14px;">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <div>
-                            <div style="font-weight:500;font-size:13px;">${s.name}</div>
-                            <div style="font-size:9px;color:var(--text2);">
+                            <div style="font-weight:600;font-size:16px;">${s.name}</div>
+                            <div style="font-size:12px;color:var(--text2);">
                                 ${s.crypto}/${s.fiat} • Спред: ${s.min_spread}% • Рейтинг: ${s.min_rating}% • Сума: ${s.amount||100} USDT
                                 ${s.depositFee ? `• Комісії: ${s.depositFee}%/${s.withdrawFee||0.5}%` : ''}
                             </div>
                         </div>
-                        <span class="badge ${s.active !== false ? 'active' : 'inactive'}">
+                        <span class="badge ${s.active !== false ? 'active' : 'inactive'}" style="font-size:12px;padding:4px 14px;">
                             ${s.active !== false ? '🟢 Активна' : '🔴 Викл'}
                         </span>
                     </div>
-                    <div style="margin-top:3px;display:flex;gap:4px;">
+                    <div style="margin-top:6px;display:flex;gap:6px;">
                         <button class="btn btn-sm ${s.active !== false ? 'btn-danger' : 'btn-primary'}" onclick="toggleStrategy(${i})">
                             ${s.active !== false ? '⏸ Вимкнути' : '▶️ Активувати'}
                         </button>
